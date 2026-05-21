@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You Are Safe Here — Australia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:   #0b0b0f;
+  --cream: #f8f4ee;
+  --red:   #b01e1e;
+  --red2:  #d63030;
+  --sand:  #c9a96e;
+  --sage:  #4e7c5f;
+  --muted: #7a7060;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 999; opacity: 0.5;
+}
+
+/* ══ HERO ══ */
+.hero {
+  min-height: 100vh;
+  background: var(--ink);
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -15%; left: 50%;
+  transform: translateX(-50%);
+  width: 72vw; height: 72vw;
+  background: radial-gradient(circle, rgba(176,30,30,0.16) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-lines { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.hero-lines span {
+  position: absolute; display: block;
+  background: rgba(255,255,255,0.025);
+  transform-origin: top left;
+}
+.hero-lines span:nth-child(1) { width:1px; height:100vh; top:0; left:20%; transform:rotate(12deg); }
+.hero-lines span:nth-child(2) { width:1px; height:100vh; top:0; left:50%; transform:rotate(-6deg); }
+.hero-lines span:nth-child(3) { width:1px; height:100vh; top:0; left:78%; transform:rotate(9deg); }
+
+.hero-body {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 80px 24px 40px;
+  position: relative; z-index: 2;
+}
+
+.hero-location {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--sand); margin-bottom: 36px;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.2s forwards;
+}
+.hero-location::before, .hero-location::after {
+  content: ''; width: 28px; height: 1px;
+  background: var(--sand); opacity: 0.45;
+}
+
+.hero-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(50px, 11vw, 106px);
+  font-weight: 900; line-height: 0.95;
+  color: #fff; letter-spacing: -0.02em;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.4s forwards;
+}
+
+/* ── smooth silky fade-in, no glitch, no typewriter ── */
+.hero-h1 .sub-line {
+  display: block;
+  font-style: italic; font-weight: 400;
+  font-size: 0.74em; color: var(--sand);
+  margin-top: 10px; line-height: 1.25;
+  opacity: 0;
+  animation: silkReveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) 1.3s forwards;
+}
+
+.hero-rule {
+  width: 0; height: 2px;
+  background: var(--red2);
+  margin: 30px auto;
+  opacity: 0;
+  animation: lineExpand 0.9s ease 0.75s forwards;
+}
+
+.hero-sub {
+  font-size: clamp(14px, 2vw, 17px); font-weight: 400;
+  color: rgba(255,255,255,0.65);
+  max-width: 500px; line-height: 1.85;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.95s forwards;
+}
+
+.flags-row {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 7px;
+  margin-top: 34px;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.15s forwards;
+}
+.flag-pill {
+  font-size: 11px; padding: 5px 13px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4);
+  transition: all 0.3s ease; cursor: default;
+}
+.flag-pill:hover {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.72);
+  border-color: rgba(201,169,110,0.4);
+  transform: translateY(-2px);
+}
+
+/* ── STAT BAR: 700k | 1in4 women (centre, elevated) | 1in14 men ── */
+.stat-bar {
+  background: var(--red);
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 1fr;
+  position: relative; z-index: 2;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.5s forwards;
+}
+.stat-cell {
+  padding: 22px 14px; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.14);
+  transition: background 0.3s;
+}
+.stat-cell:last-child { border-right: none; }
+.stat-cell:hover { background: rgba(255,255,255,0.06); }
+
+/* centre — 1 in 4 women — larger & elevated */
+.stat-cell.centre {
+  background: rgba(0,0,0,0.15);
+  padding-top: 28px; padding-bottom: 28px;
+}
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 5vw, 34px);
+  font-weight: 900; color: #fff; line-height: 1;
+}
+.stat-cell.centre .stat-num {
+  font-size: clamp(28px, 6.5vw, 44px);
+}
+.stat-lbl {
+  font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  margin-top: 6px; line-height: 1.45;
+}
+
+/* ══ LIES vs TRUTH ══ */
+.lt-section { padding: 88px 24px; background: var(--cream); }
+.lt-inner { max-width: 960px; margin: 0 auto; }
+
+.tag-line {
+  font-size: 10px; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px;
+}
+.tag-line::before {
+  content: ''; width: 20px; height: 1px; background: var(--red2);
+}
+
+.big-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 6vw, 50px);
+  font-weight: 700; line-height: 1.1;
+  margin-bottom: 44px; color: var(--ink);
+}
+.big-title .accent {
+  color: var(--red); font-style: italic; position: relative;
+}
+.big-title .accent::after {
+  content: '';
+  position: absolute; left:0; bottom:-4px;
+  height:2px; width:0;
+  background: linear-gradient(to right, var(--red), var(--red2));
+  border-radius:1px;
+  transition: width 1s ease 0.4s;
+}
+.reveal.on .big-title .accent::after { width: 100%; }
+
+.lt-grid { display: flex; flex-direction: column; gap: 10px; }
+
+.lt-pair {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+              transform 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.lt-pair.on { opacity: 1; transform: translateY(0); }
+@media(max-width:560px) { .lt-pair { grid-template-columns: 1fr; } }
+
+.lie-box, .truth-box {
+  padding: 24px 26px; border-radius: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.lie-box:hover, .truth-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+.lie-box   { background: #faf0ef; border-left: 4px solid var(--red2); }
+.truth-box { background: #eef4f0; border-left: 4px solid var(--sage); }
+
+.box-tag {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  margin-bottom: 9px; display: block;
+}
+.lie-box   .box-tag { color: var(--red2); }
+.truth-box .box-tag { color: var(--sage); }
+.box-body { font-size: 14.5px; font-weight: 400; line-height: 1.72; color: #1c1410; }
+
+/* ══ HELP ══ */
+.help-section {
+  padding: 88px 24px; background: var(--ink);
+  text-align: center; position: relative; overflow: hidden;
+}
+.help-section::before {
+  content: '';
+  position: absolute; top: -20%; left: 50%;
+  transform: translateX(-50%);
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(176,30,30,0.1) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.help-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(34px, 7vw, 60px);
+  font-weight: 900; color: #fff;
+  margin-bottom: 12px; position: relative;
+}
+.help-sub {
+  font-size: 14px; font-weight: 400;
+  color: rgba(255,255,255,0.52);
+  max-width: 460px; margin: 0 auto 48px;
+  line-height: 1.85; position: relative;
+}
+
+.cards-grid {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 12px;
+  max-width: 860px; margin: 0 auto; position: relative;
+}
+
+.c-card {
+  flex: 1; min-width: 185px; max-width: 215px;
+  background: #161620;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 6px; padding: 22px 20px; text-align: left;
+  cursor: default;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
+  position: relative; overflow: hidden;
+}
+.c-card::before {
+  content: '';
+  position: absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(to right, var(--sand), transparent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.c-card:hover::before { transform: scaleX(1); }
+.c-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+
+.c-card.em-card { background: var(--red); border-color: rgba(255,255,255,0.1); }
+.c-card.em-card::before { background: rgba(255,255,255,0.3); }
+
+.c-type {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--sand); margin-bottom: 8px; display: block;
+}
+.c-card.em-card .c-type { color: rgba(255,255,255,0.6); }
+
+.c-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; font-weight: 700;
+  color: #fff; margin-bottom: 8px;
+  line-height: 1.2; display: block;
+}
+
+/* uniform warm gold numbers — no browser blue */
+.c-num {
+  font-size: 22px; font-weight: 600;
+  color: #f0d9a8 !important;
+  letter-spacing: -0.01em;
+  margin-bottom: 7px; line-height: 1.1; display: block;
+  text-decoration: none !important;
+}
+.c-card.em-card .c-num { color: #fff !important; font-size: 30px; }
+.c-card a, .c-card a:visited, .c-card a:hover {
+  color: inherit !important; text-decoration: none !important;
+}
+
+.c-note {
+  font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,0.5); line-height: 1.5; display: block;
+}
+.c-card.em-card .c-note { color: rgba(255,255,255,0.65); }
+
+.em-pill {
+  display: inline-flex; align-items: center;
+  gap: 20px; flex-wrap: wrap; justify-content: center;
+  background: var(--red); border-radius: 6px;
+  padding: 20px 32px; margin-top: 24px; position: relative;
+}
+.em-pill .em-tag {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+.em-pill .em-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px; font-weight: 900; color: #fff; line-height: 1;
+}
+.em-pill .em-note {
+  font-size: 13px; font-weight: 400;
+  color: rgba(255,255,255,0.6); line-height: 1.6; text-align: left;
+}
+
+/* ══ FOOTER ══ */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 60px 24px 44px;
+  text-align: center; position: relative; overflow: hidden;
+}
+footer::before {
+  content: 'SAFE';
+  position: absolute; top:50%; left:50%;
+  transform: translate(-50%,-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(80px, 18vw, 160px); font-weight: 900;
+  color: rgba(255,255,255,0.02);
+  letter-spacing: 0.1em; pointer-events: none; white-space: nowrap;
+}
+.footer-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(17px, 3.5vw, 26px);
+  font-style: italic; font-weight: 400;
+  color: rgba(255,255,255,0.60);
+  max-width: 520px; margin: 0 auto 20px;
+  line-height: 1.5; position: relative; z-index: 1;
+}
+.footer-brand {
+  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(255,255,255,0.60); position: relative; z-index: 1;
+}
+.footer-divider {
+  width: 50px; height: 1px;
+  background: rgba(255,255,255,0.10);
+  margin: 32px auto 28px; position: relative; z-index: 1;
+}
+.footer-team {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 9px;
+}
+.footer-team-label {
+  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--sand); opacity: 0.6;
+}
+.footer-names {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; align-items: center; gap: 10px;
+}
+.footer-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(14px, 2.5vw, 18px); font-weight: 700;
+  color: rgba(255,255,255,0.72);
+  display: inline-block;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.footer-team.animate .footer-name { opacity:1; transform:translateY(0); }
+.footer-team.animate .footer-name:nth-child(1) { transition-delay: 0.08s; }
+.footer-team.animate .footer-name:nth-child(3) { transition-delay: 0.20s; }
+.footer-team.animate .footer-name:nth-child(5) { transition-delay: 0.32s; }
+.footer-dot { color: var(--sand); opacity: 0.35; font-size: 15px; }
+.footer-role {
+  font-size: 11px; font-weight: 400; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.500);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.6s ease 0.44s, transform 0.6s ease 0.44s;
+}
+.footer-team.animate .footer-role { opacity:1; transform:translateY(0); }
+.footer-orgs {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; align-items: center; gap: 8px;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.6s ease 0.56s, transform 0.6s ease 0.56s;
+}
+.footer-team.animate .footer-orgs { opacity:1; transform:translateY(0); }
+.footer-org {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(13px, 2vw, 15px); font-style: italic;
+  color: var(--sand); opacity: 0.75;
+}
+.footer-org-sep { font-size: 10px; letter-spacing: 0.1em; color: rgba(255,255,255,0.50); }
+
+/* ══ KEYFRAMES ══ */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; } to { opacity:1; }
+}
+@keyframes lineExpand {
+  from { width:0; opacity:0; }
+  to   { width:60px; opacity:1; }
+}
+
+/* silky blur-in — smooth, no glitch, no typewriter */
+@keyframes silkReveal {
+  0%   { opacity:0; transform:translateY(12px); filter:blur(8px); }
+  40%  { filter:blur(2px); }
+  100% { opacity:1; transform:translateY(0);   filter:blur(0px); }
+}
+
+@keyframes cardReveal {
+  from { opacity:0; transform:translateY(20px) scale(0.97); }
+  to   { opacity:1; transform:translateY(0)    scale(1); }
+}
+
+.reveal {
+  opacity:0; transform:translateY(26px);
+  transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1),
+              transform 0.85s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.on { opacity:1; transform:translateY(0); }
+
+.reveal.on .c-card { opacity:0; animation: cardReveal 0.55s cubic-bezier(0.22,1,0.36,1) forwards; }
+.reveal.on .c-card:nth-child(1) { animation-delay:0.04s; }
+.reveal.on .c-card:nth-child(2) { animation-delay:0.10s; }
+.reveal.on .c-card:nth-child(3) { animation-delay:0.16s; }
+.reveal.on .c-card:nth-child(4) { animation-delay:0.22s; }
+.reveal.on .c-card:nth-child(5) { animation-delay:0.28s; }
+.reveal.on .c-card:nth-child(6) { animation-delay:0.34s; }
+</style>
+</head>
+<body>
+
+<!-- ══ SECTION 1: HERO ══ -->
+<section class="hero">
+  <div class="hero-lines"><span></span><span></span><span></span></div>
+
+  <div class="hero-body">
+    <div class="hero-location">Australia · For International Students</div>
+
+    <h1 class="hero-h1">
+      You came here<br>to build a future.
+      <span class="sub-line">Violence is not part of it.</span>
+    </h1>
+
+    <div class="hero-rule"></div>
+
+    <p class="hero-sub">
+      No matter your visa. No matter your language. No matter where you came from.
+      In Australia, you have the right to be safe — and the right to ask for help.
+    </p>
+
+    <div class="flags-row">
+      <span class="flag-pill">🇨🇳 China</span>
+      <span class="flag-pill">🇮🇳 India</span>
+      <span class="flag-pill">🇻🇳 Vietnam</span>
+      <span class="flag-pill">🇧🇩 Bangladesh</span>
+      <span class="flag-pill">🇧🇷 Brazil</span>
+      <span class="flag-pill">🇵🇰 Pakistan</span>
+      <span class="flag-pill">🇳🇬 Nigeria</span>
+      <span class="flag-pill">🇲🇾 Malaysia</span>
+      <span class="flag-pill">🇹🇭 Thailand</span>
+      <span class="flag-pill">🇳🇵 Nepal</span>
+      <span class="flag-pill">& every nation</span>
+    </div>
+  </div>
+
+  <!-- LEFT: 700k students | CENTRE: 1 in 4 women | RIGHT: 1 in 14 men -->
+  <div class="stat-bar">
+    <div class="stat-cell">
+      <div class="stat-num">700,000+</div>
+      <div class="stat-lbl">International students in Australia each year</div>
+    </div>
+    <div class="stat-cell centre">
+      <div class="stat-num">1 in 4</div>
+      <div class="stat-lbl">Women experience domestic violence in their lifetime</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">1 in 14</div>
+      <div class="stat-lbl">Men are also victim-survivors of intimate partner violence</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 2: LIES vs TRUTH ══ -->
+<section class="lt-section">
+  <div class="lt-inner reveal">
+    <div class="tag-line">Breaking the Lies</div>
+    <h2 class="big-title">What they tell you.<br><span class="accent">What Australian law actually says.</span></h2>
+
+    <div class="lt-grid">
+
+      <div class="lt-pair">
+        <div class="lie-box">
+          <span class="box-tag">❌ What They Tell You</span>
+          <p class="box-body">"If you call the police, immigration will deport you immediately."</p>
+        </div>
+        <div class="truth-box">
+          <span class="box-tag">✓ Australian Law</span>
+          <p class="box-body">Only the Minister of Home Affairs can cancel a visa — not your abuser, not police. The Australian Government has zero tolerance for DV against all visa holders.</p>
+        </div>
+      </div>
+
+      <div class="lt-pair">
+        <div class="lie-box">
+          <span class="box-tag">❌ What They Tell You</span>
+          <p class="box-body">"You'll lose your student visa if you leave this relationship."</p>
+        </div>
+        <div class="truth-box">
+          <span class="box-tag">✓ Australian Law</span>
+          <p class="box-body">Your student visa is yours — it is not controlled by your partner. You can leave and keep your visa. The Department of Home Affairs has a specialist DV support team.</p>
+        </div>
+      </div>
+
+      <div class="lt-pair">
+        <div class="lie-box">
+          <span class="box-tag">❌ What They Tell You</span>
+          <p class="box-body">"Nobody will believe you — you don't even speak English properly."</p>
+        </div>
+        <div class="truth-box">
+          <span class="box-tag">✓ Australian Law</span>
+          <p class="box-body">You have the legal right to a free interpreter (TIS National: 131 450) at any point — calling 000, speaking to police, at a hospital, or seeking legal help.</p>
+        </div>
+      </div>
+
+      <div class="lt-pair">
+        <div class="lie-box">
+          <span class="box-tag">❌ What They Tell You</span>
+          <p class="box-body">"There's no money to help you — you're on your own."</p>
+        </div>
+        <div class="truth-box">
+          <span class="box-tag">✓ Australian Law</span>
+          <p class="box-body">The Leaving Violence Program (from July 2025) provides up to $5,000 to eligible victim-survivors — including temporary visa holders — to help cover the cost of leaving safely.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 3: GET HELP ══ -->
+<section class="help-section">
+  <h2 class="help-title reveal">Get help right now.</h2>
+  <p class="help-sub reveal">All services are free, confidential, and available regardless of your visa status. You do not need to give your name.</p>
+
+  <div class="cards-grid reveal">
+    <div class="c-card em-card">
+      <span class="c-type">🚨 Emergency</span>
+      <span class="c-name">Police / Ambulance / Fire</span>
+      <span class="c-num">000</span>
+      <span class="c-note">If you are in immediate danger — call now</span>
+    </div>
+    <div class="c-card">
+      <span class="c-type">📞 24/7 Helpline</span>
+      <span class="c-name">1800RESPECT</span>
+      <span class="c-num">1800 737 732</span>
+      <span class="c-note">Free · Confidential · 24/7 · Text: 0458 737 732</span>
+    </div>
+    <div class="c-card">
+      <span class="c-type">🌐 Free Interpreter</span>
+      <span class="c-name">TIS National</span>
+      <span class="c-num">131 450</span>
+      <span class="c-note">160+ languages · 24/7 · Free for DV calls</span>
+    </div>
+    <div class="c-card">
+      <span class="c-type">🏛 Visa Support</span>
+      <span class="c-name">Home Affairs DV Team</span>
+      <span class="c-num">131 881</span>
+      <span class="c-note">Specialist support for visa holders experiencing violence</span>
+    </div>
+    <div class="c-card">
+      <span class="c-type">⚖️ Free Legal Help</span>
+      <span class="c-name">Redfern Legal Centre</span>
+      <span class="c-num">(02) 9698 7277</span>
+      <span class="c-note">Free legal advice for people experiencing DV</span>
+    </div>
+    <div class="c-card">
+      <span class="c-type">💚 Mental Health</span>
+      <span class="c-name">Headspace</span>
+      <span class="c-num">1800 650 890</span>
+      <span class="c-note">Youth mental health · free & confidential</span>
+    </div>
+  </div>
+
+  <div class="em-pill reveal">
+    <div>
+      <div class="em-tag">In an emergency</div>
+      <div class="em-num">Call 000</div>
+    </div>
+    <div class="em-note">
+      Tell them you need an interpreter.<br>
+      They will arrange one immediately.
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECTION 4: FOOTER ══ -->
+<footer>
+  <p class="footer-quote">"You crossed the world for a better life.<br>You deserve to actually live it."</p>
+  <p class="footer-brand">You Are Safe Here · Australia · International Student Awareness</p>
+
+  <div class="footer-divider"></div>
+
+  <div class="footer-team" id="footerTeam">
+    <div class="footer-team-label">A project by</div>
+    <div class="footer-names">
+      <span class="footer-name">Ritesh Maharjan</span>
+      <span class="footer-dot">·</span>
+      <span class="footer-name">Roshni Ranjitkar</span>
+      <span class="footer-dot">·</span>
+      <span class="footer-name">Supriya Pudasaini</span>
+    </div>
+    <div class="footer-role">Placement Students · Anglicare</div>
+    <div class="footer-orgs">
+      <span class="footer-org">Excelsia University College</span>
+      <span class="footer-org-sep">· 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revEls = document.querySelectorAll('.reveal');
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('on'), i * 55);
+        revObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  revEls.forEach(el => revObs.observe(el));
+
+  // LT pairs stagger on scroll
+  document.querySelectorAll('.lt-pair').forEach((p, i) => {
+    new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        setTimeout(() => p.classList.add('on'), i * 120);
+      }
+    }, { threshold: 0.12 }).observe(p);
+  });
+
+  // Footer team reveal
+  const ft = document.getElementById('footerTeam');
+  if (ft) {
+    new IntersectionObserver(e => {
+      if (e[0].isIntersecting) ft.classList.add('animate');
+    }, { threshold: 0.3 }).observe(ft);
+  }
+
+  // 3D tilt on contact cards
+  document.querySelectorAll('.c-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width  - 0.5) * 10;
+      const y = ((e.clientY - r.top)  / r.height - 0.5) * -10;
+      card.style.transform = `perspective(700px) rotateX(${y}deg) rotateY(${x}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => card.style.transform = '');
+  });
+</script>
+</body>
+</html>
